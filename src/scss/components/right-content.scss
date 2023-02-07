@@ -1,0 +1,26 @@
+.right__content__wrapper {
+    background-color: $right-layout-bg;
+    height: 90vh;
+    overflow: hidden;
+    overflow: scroll;
+
+    nav {
+        .nav__list {
+            .nav__item {
+            }
+        }
+
+        .user__icon {
+            img {
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+
+    .active {
+        color: #000;
+        border-bottom: 3px solid #000;
+    }
+}

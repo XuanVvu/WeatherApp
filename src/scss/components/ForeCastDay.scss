@@ -1,0 +1,15 @@
+.week__item {
+    background: #fff;
+    border-radius: 5px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.active__week {
+    background-color: #0dcaf0;
+}
+.inactive__week {
+    background-color: #fff;
+}

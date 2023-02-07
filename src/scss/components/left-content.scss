@@ -1,0 +1,31 @@
+.left__content__wrapper {
+    background-color: $white-color;
+    height: 90vh;
+    overflow: hidden;
+
+    .display__content {
+        .location__name,
+        .temp_c {
+            font-weight: 700;
+        }
+        .time {
+            line-height: 2;
+        }
+        .clouds__description {
+            color: $text-color;
+            line-height: 1.5rem;
+        }
+        .sub__bg {
+            position: relative;
+
+            .sub__title {
+                position: absolute;
+            }
+
+            img {
+                border-radius: 5px;
+                width: 100%;
+            }
+        }
+    }
+}
