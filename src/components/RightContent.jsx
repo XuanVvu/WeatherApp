@@ -3,6 +3,7 @@ import '../scss/index.scss';
 
 import { NavLink } from 'react-router-dom';
 import Routers from '../routes/Routers';
+import Toast from './Toast';
 
 const NAV = [
     {
@@ -21,10 +22,11 @@ const NAV = [
     },
 ];
 
-const RightContent = () => {
+const RightContent = ({ errCode }) => {
     return (
         <Fragment>
             <div className="right__content__wrapper p-4">
+                {errCode && <Toast />}
                 <nav className="d-flex align-item-center justify-content-between">
                     <ul className="nav__list d-flex fs-5 fw-bold">
                         {NAV.map((item, index) => (
@@ -42,6 +44,7 @@ const RightContent = () => {
                         />
                     </div>
                 </nav>
+
                 <Routers />
             </div>
         </Fragment>

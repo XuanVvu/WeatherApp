@@ -13,6 +13,8 @@ export const currentWeatherContext = createContext();
 
 const Layout = () => {
     const [nameLocation, setNameLocation] = useState('Hanoi');
+    const [location, setLocation] = useState('');
+    const [errCode, setErrCode] = useState(null);
     const [lat, setLat] = useState('21.0245');
     const [lon, setLon] = useState('105.8412');
 
@@ -26,11 +28,17 @@ const Layout = () => {
     };
     useEffect(() => {
         const fetchData = async () => {
-            let resLocationData = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=${nameLocation}&appid=${API_KEY}&units=metric`,
-            );
-            setLat(resLocationData.data.coord.lat);
-            setLon(resLocationData.data.coord.lon);
+            try {
+                let resLocationData = await axios.get(
+                    `https://api.openweathermap.org/data/2.5/weather?q=${nameLocation}&appid=${API_KEY}&units=metric`,
+                );
+                setLat(resLocationData.data.coord.lat);
+                setLon(resLocationData.data.coord.lon);
+                setLocation(resLocationData.data.name);
+                setErrCode('');
+            } catch (e) {
+                setErrCode(e.response.data.cod);
+            }
         };
         fetchData();
     }, [nameLocation]);
@@ -52,11 +60,11 @@ const Layout = () => {
             <Container>
                 <Row>
                     <Col lg="3 " className=" p-0">
-                        {currentData && <LeftContent onChangeSearch={handleChangeSearch} />}
+                        {currentData && <LeftContent onChangeSearch={handleChangeSearch} name={location} />}
                     </Col>
 
                     <Col lg="9" className="p-0">
-                        <RightContent />
+                        <RightContent errCode={errCode} />
                     </Col>
                 </Row>
             </Container>
