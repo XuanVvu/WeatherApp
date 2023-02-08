@@ -4,7 +4,7 @@ import '../scss/pages/today.scss';
 import { useSelector } from 'react-redux';
 
 const Today = () => {
-    const currentData = useSelector((state) => state.currentData);
+    const currentData = useSelector((state) => state.data.currentData);
     let sunriseTime;
     let sunsetTime;
     if (currentData) {

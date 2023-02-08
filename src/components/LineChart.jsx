@@ -4,7 +4,7 @@ import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title } from 
 import { useSelector } from 'react-redux';
 
 const LineChart = () => {
-    const hourlyData = useSelector((state) => state.hourly);
+    const hourlyData = useSelector((state) => state.data.hourly);
     const convertTimeStamp = (num) => {
         let hour = new Date(num * 1000);
         return hour

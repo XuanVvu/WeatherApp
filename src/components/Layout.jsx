@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect, createContext } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentWeatherData, addLocationName, addDailyData, addHourlyData } from '../redux/actions';
+import weatherData from '../redux/reducer';
 
 import LeftContent from './LeftContent';
 import RightContent from './RightContent';
@@ -18,12 +19,12 @@ const Layout = () => {
     const [lat, setLat] = useState('21.0245');
     const [lon, setLon] = useState('105.8412');
 
-    const currentData = useSelector((state) => state.currentData);
+    const currentData = useSelector((state) => state.data.currentData);
 
     const dispatch = useDispatch();
 
     const handleChangeSearch = (name) => {
-        dispatch(addLocationName(name));
+        dispatch(weatherData.actions.addLocationName(name));
         setNameLocation(name);
     };
     useEffect(() => {
@@ -48,9 +49,9 @@ const Layout = () => {
             let resData = await axios.get(
                 `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`,
             );
-            dispatch(addCurrentWeatherData({ ...resData.data.current }));
-            dispatch(addDailyData([...resData.data.daily]));
-            dispatch(addHourlyData([...resData.data.hourly]));
+            dispatch(weatherData.actions.addCurrentWeatherData({ ...resData.data.current }));
+            dispatch(weatherData.actions.addDailyData([...resData.data.daily]));
+            dispatch(weatherData.actions.addHourlyData([...resData.data.hourly]));
         };
         fetchData();
     }, [lon, lat]);

@@ -7,15 +7,12 @@ const LeftContent = ({ onChangeSearch, name }) => {
     const dateBuilder = (d) => {
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         let day = days[d.getDay()];
-        let hour = d.getHours();
-        let minute = d.getMinutes();
-
         return ` ${day}`;
     };
     const [searchData, setSearchData] = useState('');
 
-    const currentData = useSelector((state) => state.currentData);
-    const locationName = useSelector((state) => state.locationName);
+    const currentData = useSelector((state) => state.data.currentData);
+
     const handleChangeLocation = (e) => {
         setSearchData(e.target.value);
     };
