@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import './App.css';
 import { Container, Col, Row } from 'reactstrap';
 import Layout from './components/Layout';
