@@ -40,6 +40,7 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { act } from 'react-dom/test-utils';
 import { API_KEY } from '../api';
 
 const weatherData = createSlice({
@@ -52,6 +53,7 @@ const weatherData = createSlice({
         daily: [],
         hourly: [],
         status: 'ilde',
+        errCode: '',
     },
     // reducers: {
     //     addCurrentWeatherData: (state, action) => {
@@ -75,12 +77,15 @@ const weatherData = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchLatLon.fulfilled, (state, action) => {
-                console.log(' fetchLatLon- action.payload', action.payload);
-                state.lat = action.payload.lat;
-                state.lon = action.payload.lon;
+                state.lat = action.payload.coord.lat;
+                state.lon = action.payload.coord.lon;
+                state.locationName = action.payload.name;
+                state.errCode = '';
+            })
+            .addCase(fetchLatLon.rejected, (state, action) => {
+                state.errCode = action.error.code;
             })
             .addCase(fetchData.fulfilled, (state, action) => {
-                console.log('fetchData-action.payload', action.payload);
                 state.currentData = action.payload.current;
                 state.daily = action.payload.daily;
                 state.hourly = action.payload.hourly;
@@ -93,7 +98,7 @@ export const fetchLatLon = createAsyncThunk('fetchLatLon', async (name) => {
     let res = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${API_KEY}&units=metric`,
     );
-    return res.data.coord;
+    return res.data;
 });
 export const fetchData = createAsyncThunk('fetchData', async ({ lat, lon }) => {
     let res = await axios.get(

@@ -14,13 +14,13 @@ export const currentWeatherContext = createContext();
 
 const Layout = () => {
     const [nameLocation, setNameLocation] = useState('Hanoi');
-    const [location, setLocation] = useState('');
-    const [errCode, setErrCode] = useState(null);
 
     const currentData = useSelector((state) => state.data.currentData);
 
     const lat = useSelector((state) => state.data.lat);
     const lon = useSelector((state) => state.data.lon);
+    const location = useSelector((state) => state.data.locationName);
+    const errCode = useSelector((state) => state.data.errCode);
 
     const dispatch = useDispatch();
 
@@ -28,38 +28,13 @@ const Layout = () => {
         // dispatch(weatherData.actions.addLocationName(name));
         setNameLocation(name);
     };
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             let resLocationData = await axios.get(
-    //                 `https://api.openweathermap.org/data/2.5/weather?q=${nameLocation}&appid=${API_KEY}&units=metric`,
-    //             );
-    //             setLat(resLocationData.data.coord.lat);
-    //             setLon(resLocationData.data.coord.lon);
-    //             setLocation(resLocationData.data.name);
-    //             setErrCode('');
-    //         } catch (e) {
-    //             setErrCode(e.response.data.cod);
-    //         }
-    //     };
-    //     fetchData();
-    // }, [nameLocation]);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         let resData = await axios.get(
-    //             `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`,
-    //         );
-    //         dispatch(weatherData.actions.addCurrentWeatherData({ ...resData.data.current }));
-    //         dispatch(weatherData.actions.addDailyData([...resData.data.daily]));
-    //         dispatch(weatherData.actions.addHourlyData([...resData.data.hourly]));
-    //     };
-    //     fetchData();
-    // }, [lon, lat]);
     useEffect(() => {
         dispatch(fetchLatLon(nameLocation));
-        dispatch(fetchData({ lat, lon }));
     }, [nameLocation]);
+    useEffect(() => {
+        dispatch(fetchData({ lat, lon }));
+    }, [lat, lon]);
 
     return (
         <Fragment>
