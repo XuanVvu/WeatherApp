@@ -47,6 +47,7 @@ export default createSlice({
         currentData: null,
         daily: [],
         hourly: [],
+        status: 'idle',
     },
     reducers: {
         addCurrentWeatherData: (state, action) => {
@@ -63,5 +64,9 @@ export default createSlice({
         addHourlyData: (state, action) => {
             state.hourly = action.payload;
         },
+    },
+
+    extraReducers: (builder) => {
+        builder.addCase();
     },
 });
