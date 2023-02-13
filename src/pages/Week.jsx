@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import '../scss/index.scss';
 
 const Week = () => {
-    const dailyData = useSelector((state) => state.data.daily);
+    const dailyData = useSelector((state) => state.daily);
 
     const dateBuilder = (d) => {
         let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

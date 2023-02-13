@@ -11,7 +11,7 @@ const LeftContent = ({ onChangeSearch, name }) => {
     };
     const [searchData, setSearchData] = useState('');
 
-    const currentData = useSelector((state) => state.data.currentData);
+    const currentData = useSelector((state) => state.currentData);
 
     const handleChangeLocation = (e) => {
         setSearchData(e.target.value);

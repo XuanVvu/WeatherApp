@@ -1,67 +1,82 @@
-// const initState = {
-//     locationName: 'Ha Noi',
-//     currentData: null,
-//     daily: [],
-//     hourly: [],
-// };
+import { getLatLon, getWeatherData, getType } from './actions';
 
-// const rootReducer = (state = initState, action) => {
-//     switch (action.type) {
-//         case 'ADD_CURRENT_DATA':
-//             return {
-//                 ...state,
-//                 currentData: action.payload,
-//             };
+const initState = {
+    locationName: 'Ha Noi',
+    lat: '21.0245',
+    lon: '105.8412',
+    currentData: null,
+    daily: [],
+    hourly: [],
+    status: 'ilde',
+    errCode: '',
+};
 
-//         case 'ADD_LOCATION_NAME':
-//             return {
-//                 ...state,
-//                 locationName: action.payload,
-//             };
+const rootReducer = (state = initState, action) => {
+    switch (action.type) {
+        case getType(getLatLon.getLatLonRequest):
+            return {
+                ...state,
+                status: 'loading',
+            };
+        case getType(getLatLon.getLatLonSuccess):
+            return {
+                ...state,
+                status: 'idle',
+                lat: action.payload.coord.lat,
+                lon: action.payload.coord.lon,
+                locationName: action.payload.name,
+                errCode: '',
+            };
+        case getType(getLatLon.getLatLonFailure):
+            return {
+                ...state,
+                status: 'idle',
+                errCode: action.payload.code,
+            };
+        case getType(getWeatherData.getWeatherDataRequest):
+            return {
+                ...state,
+                status: 'loading',
+            };
+        case getType(getWeatherData.getWeatherDataSuccess):
+            return {
+                ...state,
+                currentData: action.payload.current,
+                daily: action.payload.daily,
+                hourly: action.payload.hourly,
+                status: 'ilde',
+            };
+        default:
+            return state;
+    }
+};
 
-//         case 'ADD_DAILY_DATA':
-//             return {
-//                 ...state,
-//                 daily: action.payload,
-//             };
+export default rootReducer;
 
-//         case 'ADD_HOURLY_DATA':
-//             return {
-//                 ...state,
-//                 hourly: action.payload,
-//             };
+// import { createSlice } from '@reduxjs/toolkit';
 
-//         default:
-//             return state;
-//     }
-// };
+// export default createSlice({
+//     name: 'weatherData',
+//     initialState: {
+//         locationName: 'Ha Noi',
+//         currentData: null,
+//         daily: [],
+//         hourly: [],
+//     },
+//     reducers: {
+//         addCurrentWeatherData: (state, action) => {
+//             state.currentData = action.payload;
+//         },
 
-// export default rootReducer;
+//         addLocationName: (state, action) => {
+//             state.locationName = action.payload;
+//         },
+//         addDailyData: (state, action) => {
+//             state.daily = action.payload;
+//         },
 
-import { createSlice } from '@reduxjs/toolkit';
-
-export default createSlice({
-    name: 'weatherData',
-    initialState: {
-        locationName: 'Ha Noi',
-        currentData: null,
-        daily: [],
-        hourly: [],
-    },
-    reducers: {
-        addCurrentWeatherData: (state, action) => {
-            state.currentData = action.payload;
-        },
-
-        addLocationName: (state, action) => {
-            state.locationName = action.payload;
-        },
-        addDailyData: (state, action) => {
-            state.daily = action.payload;
-        },
-
-        addHourlyData: (state, action) => {
-            state.hourly = action.payload;
-        },
-    },
-});
+//         addHourlyData: (state, action) => {
+//             state.hourly = action.payload;
+//         },
+//     },
+// });
