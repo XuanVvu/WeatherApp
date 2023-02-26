@@ -7,7 +7,7 @@ const initState = {
     currentData: null,
     daily: [],
     hourly: [],
-    status: 'ilde',
+    isLoading: false,
     errCode: '',
 };
 
@@ -16,12 +16,12 @@ const rootReducer = (state = initState, action) => {
         case getType(getLatLon.getLatLonRequest):
             return {
                 ...state,
-                status: 'loading',
+                isLoading: true,
             };
         case getType(getLatLon.getLatLonSuccess):
             return {
                 ...state,
-                status: 'idle',
+                isLoading: false,
                 lat: action.payload.coord.lat,
                 lon: action.payload.coord.lon,
                 locationName: action.payload.name,
@@ -30,13 +30,13 @@ const rootReducer = (state = initState, action) => {
         case getType(getLatLon.getLatLonFailure):
             return {
                 ...state,
-                status: 'idle',
+                isLoading: false,
                 errCode: action.payload.code,
             };
         case getType(getWeatherData.getWeatherDataRequest):
             return {
                 ...state,
-                status: 'loading',
+                isLoading: true,
             };
         case getType(getWeatherData.getWeatherDataSuccess):
             return {
@@ -44,7 +44,7 @@ const rootReducer = (state = initState, action) => {
                 currentData: action.payload.current,
                 daily: action.payload.daily,
                 hourly: action.payload.hourly,
-                status: 'ilde',
+                isLoading: false,
             };
         default:
             return state;
