@@ -4,6 +4,8 @@ import '../scss/index.scss';
 import { NavLink } from 'react-router-dom';
 import Routers from '../routes/Routers';
 import Toast from './Toast';
+import { useSelector } from 'react-redux';
+import Loading from './Loading';
 
 const NAV = [
     {
@@ -23,6 +25,7 @@ const NAV = [
 ];
 
 const RightContent = ({ errCode }) => {
+    const isLoading = useSelector((state) => state.isLoading);
     return (
         <Fragment>
             <div className="right__content__wrapper p-4">
@@ -44,8 +47,7 @@ const RightContent = ({ errCode }) => {
                         />
                     </div>
                 </nav>
-
-                <Routers />
+                {isLoading ? <Loading /> : <Routers />}
             </div>
         </Fragment>
     );

@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import '../scss/index.scss';
 import { Input } from 'reactstrap';
 import { useSelector } from 'react-redux';
+import { removeVietnameseTones } from '../config/configData';
 
 const LeftContent = ({ onChangeSearch, name }) => {
     const dateBuilder = (d) => {
@@ -11,7 +12,7 @@ const LeftContent = ({ onChangeSearch, name }) => {
     };
     const [searchData, setSearchData] = useState('');
 
-    const currentData = useSelector((state) => state.data.currentData);
+    const currentData = useSelector((state) => state.currentData);
 
     const handleChangeLocation = (e) => {
         setSearchData(e.target.value);
@@ -19,7 +20,7 @@ const LeftContent = ({ onChangeSearch, name }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            onChangeSearch(searchData);
+            onChangeSearch(removeVietnameseTones(searchData));
         }
     };
     let hour;

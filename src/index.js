@@ -5,8 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
-import store from './redux/store';
+
 import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from '@redux-saga/core';
+
+import mySaga from './redux/saga';
+import reducers from './redux/reducer';
+
+const sagaMiddleWare = createSagaMiddleware();
+const store = createStore(reducers, applyMiddleware(sagaMiddleWare));
+
+sagaMiddleWare.run(mySaga);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,27 +1,17 @@
-export const addCurrentWeatherData = (data) => {
-    return {
-        type: 'ADD_CURRENT_DATA',
-        payload: data,
-    };
+import { createActions } from 'redux-actions';
+
+export const getType = (reduxAction) => {
+    return reduxAction().type;
 };
 
-export const addLocationName = (name) => {
-    return {
-        type: 'ADD_LOCATION_NAME',
-        payload: name,
-    };
-};
+export const getLatLon = createActions({
+    getLatLonRequest: undefined,
+    getLatLonSuccess: (payload) => payload,
+    getLatLonFailure: (err) => err,
+});
 
-export const addDailyData = (data) => {
-    return {
-        type: 'ADD_DAILY_DATA',
-        payload: data,
-    };
-};
-
-export const addHourlyData = (data) => {
-    return {
-        type: 'ADD_HOURLY_DATA',
-        payload: data,
-    };
-};
+export const getWeatherData = createActions({
+    getWeatherDataRequest: undefined,
+    getWeatherDataSuccess: (payload) => payload,
+    getWeatherDataFailure: (err) => err,
+});
